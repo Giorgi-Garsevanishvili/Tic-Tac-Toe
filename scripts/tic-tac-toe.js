@@ -118,13 +118,17 @@ function displayResult (){
     displayFlow();
         }
 
-  document.querySelector('.closeButton').addEventListener('click', () => {
-    closeButton();
-  })
+ 
 
   function resultClass (value){
     document.querySelector('.status-box').classList.add('winStatus-box');
-    document.querySelector('.status-cont').classList.add('winStatus-cont');
+
+    if (value === false){
+      document.querySelector('.status-cont').classList.add('winStatus-cont-drow');
+    } else {
+      document.querySelector('.status-cont').classList.add('winStatus-cont');
+    }
+    
 
     if (value === true ){
       document.querySelector('.winStatus-cont').innerHTML =  `
@@ -142,26 +146,41 @@ function displayResult (){
         result.O ++;
         resultColumn();
       } 
+
+      document.querySelector('.closeButton').addEventListener('click', () => {
+        closeButton();
+      })
     } else if (value === false) {
       result.tie ++;
       resultColumn();
-      document.querySelector('.winStatus-cont').innerHTML =  `
+      document.querySelector('.winStatus-cont-drow').innerHTML =  `
       <div class="res-box">
         <div class="close">
-          <button class="closeButton">X</button>
+          <button class="closeButton-drow">X</button>
         </div>
         <div class="res-cont">Draw!</div>
       </div>
     `
+      document.querySelector('.closeButton-drow').addEventListener('click', () => {
+        closeButton();
+      })
     }
     saveResult();
+    
     
   }
   
   function  closeButton (){
-    document.querySelector('.winStatus-cont').innerHTML ='';
-    document.querySelector('.status-box').classList.remove('winStatus-box')
-    document.querySelector('.status-cont').classList.remove('winStatus-cont')
+    if (value === true){
+      document.querySelector('.winStatus-cont').innerHTML ='';
+      document.querySelector('.status-box').classList.remove('winStatus-box')
+      document.querySelector('.status-cont').classList.remove('winStatus-cont')
+    } else {
+      document.querySelector('.winStatus-cont-drow').innerHTML ='';
+      document.querySelector('.status-box').classList.remove('winStatus-box')
+      document.querySelector('.status-cont').classList.remove('winStatus-cont-drow')
+    }
+    
     resetGame();
   }
 }
